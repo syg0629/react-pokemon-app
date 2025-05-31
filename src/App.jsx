@@ -6,7 +6,7 @@ import PokeCard from "./components/Poke.Card";
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(20);
+  const limit = 20;
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -70,7 +70,7 @@ function App() {
       <section className="pt-6 flex flex-col justify-center items-center overflow-auto z-0">
         <div className="flex flex-row flex-wrap gap-[16px] items-center justify-center px-2 max-w-4xl">
           {pokemons.length > 0 ? (
-            pokemons.map(({ url, name }, index) => (
+            pokemons.map(({ url, name }) => (
               <PokeCard key={url} url={url} name={name} />
             ))
           ) : (
