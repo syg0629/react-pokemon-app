@@ -1,31 +1,43 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
 import PokeCard from "./components/Poke.Card";
 import { useDebounce } from "./hooks/useDebounce";
 
 function App() {
-  const [pokemons, setPokemons] = useState([]);
-  const [offset, setOffset] = useState(0);
+  // 모든 포켓몬 데이터를 가지고 있는 state
+  const [allPokemons, setAllPokemons] = useState([]);
+  // 실제로 리스트로 보여주는 포켓몬 데이터를 가지고 있는 state
+  const [displayedPokemons, setDisplayedPokemons] = useState([]);
+  // 한번에 보여주는 포켓몬 수
   const limit = 20;
+  const url = `https://pokeapi.co/api/v2/pokemon?limit=1008&offset=0`;
+
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
+  const filterDisplayedPokemonData = (
+    allPokemonsData,
+    displayedPokemons = []
+  ) => {
+    const limit = dispayedPokemons.length + limitNum;
+    // 모든 포켓몬 데이터에서 limitNum 만큼 더 가져오기
+    const array = allPokemonsData.filter((_, index) => index + 1 <= limit);
+    return array;
+  };
+
   useEffect(() => {
-    fetchPokeData(true);
+    fetchPokeData();
   }, []);
 
   useEffect(() => {
     handleSearchInput(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
 
-  const fetchPokeData = async (isFirstFetch) => {
+  const fetchPokeData = async () => {
     try {
-      const offsetValue = isFirstFetch ? 0 : offset + limit;
-      const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offsetValue}`;
       const response = await axios.get(url);
       setPokemons([...pokemons, ...response.data.results]);
-      setOffset(offsetValue);
     } catch (error) {
       console.error(error);
     }
