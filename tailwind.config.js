@@ -1,3 +1,4 @@
+import tailwindScrollbar from "tailwind-scrollbar";
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -32,6 +33,6 @@ export default {
         none: "#BfBfBf",
       },
     },
+    plugins: [tailwindScrollbar],
   },
-  plugins: [],
 };
