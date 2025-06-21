@@ -1,4 +1,4 @@
-export const Pokeball = ({ className: CN = "" }) => (
+const Pokeball = ({ className: CN = "" }) => (
   <svg
     viewBox="0 0 208 208"
     fill="currentColor"
@@ -17,3 +17,5 @@ export const Pokeball = ({ className: CN = "" }) => (
     </g>
   </svg>
 );
+
+export default Pokeball;

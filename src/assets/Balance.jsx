@@ -1,4 +1,4 @@
-export const Balance = () => (
+const Balance = () => (
   <svg
     width="16"
     height="16"
@@ -49,3 +49,5 @@ export const Balance = () => (
     </defs>
   </svg>
 );
+
+export default Balance;

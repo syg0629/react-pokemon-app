@@ -1,4 +1,4 @@
-export const Loading = ({ className: CN = "" }) => (
+const Loading = ({ className: CN = "" }) => (
   <svg
     version="1.1"
     id="loader-1"
@@ -14,3 +14,5 @@ export const Loading = ({ className: CN = "" }) => (
     ></path>
   </svg>
 );
+
+export default Loading;

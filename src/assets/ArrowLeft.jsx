@@ -1,4 +1,4 @@
-export const ArrowLeft = ({ className: CN = "" }) => (
+const ArrowLeft = ({ className: CN = "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={CN}
@@ -13,3 +13,5 @@ export const ArrowLeft = ({ className: CN = "" }) => (
     />
   </svg>
 );
+
+export default ArrowLeft;

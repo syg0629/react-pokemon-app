@@ -1,4 +1,4 @@
-export const LessThan = ({ className: CN = "" }) => (
+const LessThan = ({ className: CN = "" }) => (
   <svg
     viewBox="0 0 8 16"
     fill="none"
@@ -23,3 +23,5 @@ export const LessThan = ({ className: CN = "" }) => (
     </defs>
   </svg>
 );
+
+export default LessThan;

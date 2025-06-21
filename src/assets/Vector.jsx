@@ -1,4 +1,4 @@
-export const Vector = () => (
+const Vector = () => (
   <svg
     width="8"
     height="16"
@@ -12,3 +12,5 @@ export const Vector = () => (
     />
   </svg>
 );
+
+export default Vector;

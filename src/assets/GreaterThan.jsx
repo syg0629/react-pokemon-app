@@ -1,4 +1,4 @@
-export const GreaterThan = ({ className: CN = "" }) => (
+const GreaterThan = ({ className: CN = "" }) => (
   <svg
     viewBox="0 0 8 16"
     fill="none"
@@ -18,3 +18,5 @@ export const GreaterThan = ({ className: CN = "" }) => (
     </defs>
   </svg>
 );
+
+export default GreaterThan;
