@@ -8,6 +8,7 @@ import ArrowLeft from "../../assets/ArrowLeft.jsx";
 import Balance from "../../assets/Balance.jsx";
 import Vector from "../../assets/Vector.jsx";
 import Type from "../../components/Type.jsx";
+import BaseStat from "../../components/BaseStat.jsx";
 import { Link } from "react-router-dom";
 
 const DetailPage = () => {
@@ -200,7 +201,20 @@ const DetailPage = () => {
           </div>
 
           <h2 className={`text-base font-semibold ${text}`}>기본능력치</h2>
-          <div className="w-full flex justify-center"></div>
+          <div className="w-full flex justify-center">
+            <table className="">
+              <tbody>
+                {pokemon.stats.map((stat) => (
+                  <BaseStat
+                    key={stat.name}
+                    valueStat={stat.baseStat}
+                    nameStat={stat.name}
+                    type={pokemon.types[0]}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
       </div>
     </article>
