@@ -10,6 +10,7 @@ import Vector from "../../assets/Vector.jsx";
 import Type from "../../components/Type.jsx";
 import BaseStat from "../../components/BaseStat.jsx";
 import { Link } from "react-router-dom";
+import DamageRelations from "../../components/DamageRelations.jsx";
 
 const DetailPage = () => {
   const [pokemon, setPokemon] = useState();
@@ -113,8 +114,6 @@ const DetailPage = () => {
   const bg = `bg-${pokemon?.types?.[0]}`;
   const text = `text-${pokemon?.types?.[0]}`;
 
-  console.log(pokemon);
-
   return (
     <article className="flex items-center gap-1 flex-col w-full">
       <div
@@ -215,6 +214,14 @@ const DetailPage = () => {
               </tbody>
             </table>
           </div>
+
+          {pokemon.DamageRelations && (
+            <div className="w-10/12">
+              <h2 className={`text-base text-center font-semibold ${text}`}>
+                <DamageRelations damages={pokemon.DamageRelations} />
+              </h2>
+            </div>
+          )}
         </section>
       </div>
     </article>
