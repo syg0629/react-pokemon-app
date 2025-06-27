@@ -32,7 +32,7 @@ const DetailPage = () => {
       const { data: pokemonData } = await axios.get(url);
 
       if (pokemonData) {
-        const { name, id, types, weight, height, stats, abilities } =
+        const { name, id, types, weight, height, stats, abilities, sprites } =
           pokemonData;
         const nextAndPreviousPokemon = await getNextAndPreviousPokemon(id);
 
@@ -54,6 +54,7 @@ const DetailPage = () => {
           stats: formatPokemonStats(stats),
           DamageRelations,
           types: types.map((type) => type.type.name),
+          sprites: formatPokemonSprites(sprites),
         };
 
         setPokemon(formattedPokemonData);
@@ -63,6 +64,18 @@ const DetailPage = () => {
       console.error(error);
     }
   }
+
+  const formatPokemonSprites = (sprites) => {
+    const newSprites = { ...sprites };
+    Object.keys(newSprites).forEach((key) => {
+      if (typeof newSprites[key] !== "string") {
+        delete newSprites[key];
+      }
+    });
+    // 배열로 바꿔서 내보내기
+    return Object.values(newSprites);
+  };
+
   const formatPokemonStats = ([
     statHP,
     statATK,
@@ -217,13 +230,11 @@ const DetailPage = () => {
             </table>
           </div>
 
-          {/* {pokemon.DamageRelations && (
-            <div className="w-10/12">
-              <h2 className={`text-base text-center font-semibold ${text}`}>
-                <DamageRelations damages={pokemon.DamageRelations} />
-              </h2>
-            </div>
-          )} */}
+          <div className="flex my-8 flex-wrap justify-center">
+            {pokemon.sprites.map((url, index) => (
+              <img key={index} src={url} alt="sprite" />
+            ))}
+          </div>
         </section>
       </div>
       {isModalOpen && (
