@@ -10,23 +10,23 @@ import Vector from "../../assets/Vector.jsx";
 import Type from "../../components/Type.jsx";
 import BaseStat from "../../components/BaseStat.jsx";
 import { Link } from "react-router-dom";
-import DamageRelations from "../../components/DamageRelations.jsx";
 import DamageModal from "../../components/DamageModal.jsx";
 
 const DetailPage = () => {
   const [pokemon, setPokemon] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const params = useParams();
   const pokemonId = params.id;
   const baseUrl = `https://pokeapi.co/api/v2/pokemon/`;
 
   useEffect(() => {
-    fetchPokemonData(params.id);
-  }, [params]);
+    setIsLoading(true);
+    fetchPokemonData(pokemonId);
+  }, [pokemonId]);
 
-  async function fetchPokemonData(pokemonId) {
-    const url = `${baseUrl}${pokemonId}`;
+  async function fetchPokemonData(id) {
+    const url = `${baseUrl}${id}`;
 
     try {
       const { data: pokemonData } = await axios.get(url);
@@ -63,6 +63,7 @@ const DetailPage = () => {
       }
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   }
 
