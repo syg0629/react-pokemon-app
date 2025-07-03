@@ -1,8 +1,26 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 
 const NavBar = () => {
+  const [show, setShow] = useState(false);
+  const listener = () => {
+    if (window.scrollY > 50) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", listener);
+
+    return () => {
+      window.removeEventListener("scroll", listener);
+    };
+  }, []);
+
   return (
-    <NavWrapper>
+    <NavWrapper show={show}>
       <Logo>
         <Image
           alt="Poke logo"
@@ -32,6 +50,7 @@ const NavWrapper = styled.nav`
   right: 0;
   height: 70px;
   display: flex;
+  background-color: ${(props) => (props.show ? "#090b13" : "transparent")};
   justify-content: space-between;
   align-items: center;
   padding: 0 36px;
