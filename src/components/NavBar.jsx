@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import app from "../firebase";
 
@@ -13,6 +14,7 @@ const NavBar = () => {
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const [show, setShow] = useState(false);
+  const [userData, setUserData] = useState({});
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -32,7 +34,7 @@ const NavBar = () => {
   const handleAuth = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log(result);
+        setUserData(result.user);
       })
       .catch((error) => {
         console.error(error);
@@ -55,6 +57,16 @@ const NavBar = () => {
     };
   }, []);
 
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        setUserData({});
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
   return (
     <NavWrapper show={show}>
       <Logo>
@@ -66,7 +78,14 @@ const NavBar = () => {
       </Logo>
       {pathname === "/login" ? (
         <Login onClick={handleAuth}>로그인</Login>
-      ) : null}
+      ) : (
+        <SignOut>
+          <UserImg src={userData.photoURL} alt="user photo" />
+          <DropDown>
+            <span onClick={handleLogout}>Sign Out</span>
+          </DropDown>
+        </SignOut>
+      )}
     </NavWrapper>
   );
 };
@@ -82,7 +101,7 @@ const Login = styled.a`
   color: white;
 
   &:hover {
-    backtround-color: #f9f9f9;
+    background-color: #f9f9f9;
     color: #000;
     border-color: transparent;
   }
@@ -112,6 +131,45 @@ const NavWrapper = styled.nav`
   padding: 0 36px;
   letter-spacing: 16px;
   z-index: 100;
+`;
+
+const UserImg = styled.img`
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+`;
+
+const DropDown = styled.div`
+  position: absolute;
+  top: 48px;
+  right: 0px;
+  background: rgb(19, 19, 19);
+  border: 1px solid rgba(151, 151, 151, 0.34);
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
+  padding: 10px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  width: 100px;
+  opacity: 0;
+  color: white;
+`;
+
+const SignOut = styled.div`
+  position: relative;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    ${DropDown} {
+      opacity: 1;
+      transition-duration: 1s;
+    }
+  }
 `;
 
 export default NavBar;
