@@ -1,16 +1,27 @@
 import { useState } from "react";
+import { type PokemonNameAndUrl } from "../types/PokemonData";
 
-export const AutoComplete = ({ allPokemons, setDisplayedPokemons }) => {
+interface AutoCompleteProps {
+  allPokemons: PokemonNameAndUrl[];
+  setDisplayedPokemons: React.Dispatch<
+    React.SetStateAction<PokemonNameAndUrl[]>
+  >;
+}
+
+export const AutoComplete = ({
+  allPokemons,
+  setDisplayedPokemons,
+}: AutoCompleteProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filterNames = (input) => {
+  const filterNames = (input: string) => {
     const value = input.toLowerCase();
     return value
       ? allPokemons.filter((pokemon) => pokemon.name.includes(value))
       : [];
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let text = searchTerm.trim();
@@ -18,10 +29,10 @@ export const AutoComplete = ({ allPokemons, setDisplayedPokemons }) => {
     setSearchTerm("");
   };
 
-  const checkEqualName = (input) => {
+  const checkEqualName = (input: string) => {
     const filteredArray = filterNames(input);
     // 검색하는 것에 정확히 일치하는 포켓몬 이름이 있으면 autoComplete를 사용하지 않음
-    return filteredArray[0]?.namne === input ? [] : filteredArray;
+    return filteredArray[0]?.name === input ? [] : filteredArray;
   };
 
   return (
