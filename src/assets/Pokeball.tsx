@@ -1,4 +1,6 @@
-const Pokeball = ({ className: CN = "" }) => (
+import type { ClassNameProps } from "../types/ClassNameProps";
+
+const Pokeball = ({ className: CN = "" }:ClassNameProps) => (
   <svg
     viewBox="0 0 208 208"
     fill="currentColor"

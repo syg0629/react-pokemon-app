@@ -1,4 +1,6 @@
-const Loading = ({ className: CN = "" }) => (
+import type { ClassNameProps } from "../types/ClassNameProps";
+
+const Loading = ({ className: CN = "" }:ClassNameProps) => (
   <svg
     version="1.1"
     id="loader-1"

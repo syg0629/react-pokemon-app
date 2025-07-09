@@ -1,4 +1,6 @@
-const GreaterThan = ({ className: CN = "" }) => (
+import type { ClassNameProps } from "../types/ClassNameProps";
+
+const GreaterThan = ({ className: CN = "" }: ClassNameProps) => (
   <svg
     viewBox="0 0 8 16"
     fill="none"
