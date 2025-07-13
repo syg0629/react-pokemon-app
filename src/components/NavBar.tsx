@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
+  User,
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
@@ -10,15 +11,17 @@ import {
 } from "firebase/auth";
 import app from "../firebase";
 
-const initialUserData = localStorage.getItem("userData")
-  ? JSON.parse(localStorage.getItem("userData"))
-  : {};
+const userDataFromLocalStorage = localStorage.getItem("userData");
+
+const initialUserData = userDataFromLocalStorage
+  ? JSON.parse(userDataFromLocalStorage)
+  : null;
 
 const NavBar = () => {
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const [show, setShow] = useState(false);
-  const [userData, setUserData] = useState(initialUserData);
+  const [userData, setUserData] = useState<User | null>(initialUserData);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -65,7 +68,7 @@ const NavBar = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        setUserData({});
+        setUserData(null);
       })
       .catch((error) => {
         alert(error.message);
@@ -85,7 +88,9 @@ const NavBar = () => {
         <Login onClick={handleAuth}>로그인</Login>
       ) : (
         <SignOut>
-          <UserImg src={userData.photoURL} alt="user photo" />
+          {userData?.photoURL && (
+            <UserImg src={userData.photoURL} alt="user photo" />
+          )}
           <DropDown>
             <span onClick={handleLogout}>Sign Out</span>
           </DropDown>
@@ -123,7 +128,7 @@ const Logo = styled.a`
   margin-top: 4px;
 `;
 
-const NavWrapper = styled.nav`
+const NavWrapper = styled.nav<{ show: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
